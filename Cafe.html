@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Café Aroma</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Reset & Global */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Poppins', sans-serif; background-color: #fff8f0; color: #333; scroll-behavior: smooth; }
+
+    /* Navbar */
+    nav {
+      background: linear-gradient(90deg, #4b2e2e, #7b4a4a);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: 0.3s;
+    }
+    nav ul { list-style: none; display: flex; gap: 20px; }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+      position: relative;
+    }
+    nav ul li a::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -3px;
+      left: 0;
+      background-color: #ffd699;
+      transition: 0.3s;
+    }
+    nav ul li a:hover::after {
+      width: 100%;
+    }
+
+    nav .logo { font-size: 1.5rem; font-weight: bold; }
+    .menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; }
+
+    /* Hero */
+    #home {
+      height: 100vh;
+      background: url("images/hero.jpg") center/cover no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      position: relative;
+    }
+    #home::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+    }
+    #home .content { position: relative; z-index: 1; }
+    #home h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      animation: fadeInDown 1s ease;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+    }
+    #home p {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      animation: fadeInUp 1s ease;
+      text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
+    }
+    #home .btn {
+      background: #ffd699;
+      color: #4b2e2e;
+      padding: 12px 25px;
+      font-weight: bold;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    #home .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+      background: #e6b566;
+    }
+
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity:1; transform: translateY(0); } }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity:1; transform: translateY(0); } }
+
+    /* Sections */
+    section { padding: 60px 20px; text-align: center; }
+    h2 { color: #4b2e2e; margin-bottom: 20px; }
+
+    /* About */
+    #about img { width: 100%; max-width: 500px; margin-top: 20px; border-radius: 10px; }
+
+    /* Menu */
+    .menu-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      justify-items: center;
+    }
+    .card {
+      background: linear-gradient(145deg, #fff8f0, #ffeedd);
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+    .card img {
+      width: 100%;
+      border-radius: 15px;
+      margin-bottom: 10px;
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 20px rgba(0,0,0,0.2);
+    }
+    .card h3 { color: #4b2e2e; margin-bottom: 5px; }
+    .card p {
+      background: #ffd699;
+      color: #4b2e2e;
+      padding: 5px 10px;
+      border-radius: 20px;
+      display: inline-block;
+      font-weight: bold;
+    }
+    .card img:hover {
+      transform: scale(1.05);
+    }
+
+
+    /* Gallery */
+    #gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+    #gallery img {
+      width: 100%;
+      border-radius: 15px;
+      transition: transform 0.4s, box-shadow 0.4s;
+    }
+    #gallery img:hover {
+      transform: scale(1.07);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    /* Contact */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      max-width: 500px;
+      margin: 20px auto 0;
+    }
+    form input, form textarea {
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      transition: 0.3s;
+    }
+    form input:focus, form textarea:focus {
+      border-color: #ffd699;
+      box-shadow: 0 0 8px rgba(255,214,153,0.5);
+      outline: none;
+    }
+    form button {
+      width: 180px;
+      align-self: center;
+      background: #ffd699;
+      border: none;
+      padding: 12px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    form button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+      background: #e6b566;
+    }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(90deg, #4b2e2e, #7b4a4a);
+      color: white;
+      text-align: center;
+      padding: 25px;
+      margin-top: 40px;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav ul { flex-direction: column; gap: 10px; display: none; background: #4b2e2e; position: absolute; top: 60px; right: 0; width: 200px; padding: 10px; }
+      nav ul.show { display: flex; }
+      .menu-toggle { display: block; color: white; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">☕ Café Aroma</div>
+    <div class="menu-toggle" onclick="document.querySelector('nav ul').classList.toggle('show')">☰</div>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section id="home">
+    <div class="content">
+      <h1>Welcome to Café Aroma</h1>
+      <p>Freshly brewed coffee & cozy vibes</p>
+      <button class="btn" onclick="document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });">See Our Menu</button>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <h2>Our Story</h2>
+    <p>At Café Aroma, every cup tells a story. From beans sourced ethically to the final pour, we serve love in every sip.</p>
+    <img src="images/about.jpg" alt="About Our Café">
+  </section>
+
+  <!-- Menu -->
+  <section id="menu">
+    <h2>Our Menu</h2>
+    <div id="menu-list" class="menu-cards"></div>
+
+    <script>
+      async function loadMenu() {
+          try {
+            const res = await fetch("http://localhost:5000/menu");
+            if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
+            const menuItems = await res.json();
+            const container = document.getElementById("menu-list");
+
+            container.innerHTML = menuItems.map(item => `
+              <div class="card">
+                <img src="images/${item.name.toLowerCase()}.jpg" alt="${item.name}">
+                <h3>${item.name}</h3>
+                <p>₹${item.price}</p>
+              </div>
+            `).join("");
+          } catch (err) {
+            console.error("Fetch error:", err);
+          }
+        }
+        loadMenu();
+
+    </script>
+
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery">
+    <h2>Gallery</h2>
+    <img src="images/coffee.jpg" alt="Coffee 1">
+    <img src="images/caramel.jpg" alt="Coffee 2">
+    <img src="images/coldcoffee.jpg" alt="Coffee 3">
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <p>📍 123 Coffee Street, Nashik, India</p>
+    <p>📞 +91 9876543210</p>
+    <p>✉️ cafe@aroma.com</p>
+
+    <form id="contactForm">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" placeholder="Message" rows="5" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+
+    <script>
+      document.getElementById("contactForm").addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const formData = {
+            name: e.target.name.value,
+            email: e.target.email.value,
+            message: e.target.message.value
+          };
+
+          try {
+            const res = await fetch("http://localhost:5000/contact", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(formData)
+            });
+            const data = await res.json();
+            alert(data.message);
+            e.target.reset();
+          } catch (err) {
+            console.error("Fetch error:", err);
+            alert("Failed to send message. Please try again later.");
+          }
+        });
+
+    </script>
+
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Café Aroma. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
